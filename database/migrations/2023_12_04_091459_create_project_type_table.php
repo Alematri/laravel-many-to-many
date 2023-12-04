@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('project_type', function (Blueprint $table) {
-            $table-unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
-                ->reference('id')
-                ->on('project')
+                ->references('id') // Modifica da reference a references
+                ->on('projects')
                 ->cascadeOnDelete();
 
-                $table-unsignedBigInteger('type_id');
-                $table->foreign('type_id')
-                    ->reference('id')
-                    ->on('type')
-                    ->cascadeOnDelete();
+            $table->unsignedBigInteger('type_id');
+            $table->foreign('type_id')
+                ->references('id') // Modifica da reference a references
+                ->on('types')
+                ->cascadeOnDelete();
         });
     }
 

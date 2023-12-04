@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Project;
-use App\Model\Type;
+use App\Models\Type;
 
 class ProjectTypeTableSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class ProjectTypeTableSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 0; $i < 150; $i++){
+        for($i = 0; $i < 30; $i++){
             $project = Project::inRandomOrder()->first();
 
             $type_id = Type::inRandomOrder()->first()->id;

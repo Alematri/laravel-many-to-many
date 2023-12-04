@@ -48,19 +48,19 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $form_data = $request->all();
+        $new_project = new Project();
         $form_data['slug']=Helper::generateSlug($form_data['title'], Project::class);
-        $new_project=Project::create($form_data);
 
         return redirect()->route('admin.projects.show', $new_project)->with('success', 'Progetto inserito con successo');
 
-
-        $new_project = Project::create($form_data);
+        $new_project ->fill($form_data);
+        $new_project -> save();
 
         if(array_key_exists('types', $form_data)){
-
+            $new_project -> types()->attach($form_data['types']);
         }
 
-        return redirect()->route('admin.projects.show', $new_prject);
+        return redirect()->route('admin.projects.show', $new_project);
 
     }
 
@@ -82,17 +82,18 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function edit(Project $project)
-    {
-        //visto che ho fuso create e edit gli passo i valori
-        $method = 'PUT';
-        $route = route('admin.projects.update', $project);
-        $technologies = Technology::all();
-        $types = Type::all();
+     public function edit(Project $project)
+     {
+        $project->load('types');
+         //visto che ho fuso create e edit gli passo i valori
+         $method = 'PUT';
+         $route = route('admin.projects.update', $project);
+         $technologies = Technology::all();
+         $types = Type::all();
 
-        // Passa anche il $project alla vista
-        return view('admin.projects.create', compact('method', 'route', 'technologies', 'project', 'type'));
-    }
+         // Passa anche il $project e $types alla vista
+         return view('admin.projects.create', compact('method', 'route', 'technologies', 'project', 'types'));
+     }
 
     /**
      * Update the specified resource in storage.
@@ -112,7 +113,7 @@ class ProjectController extends Controller
 
         $project->update($form_data);
 
-        if(array_key_exists('types', $for_data)){
+        if(array_key_exists('types', $form_data)){
             $project->types()->sync($form_data['types']);
         }else{
             $project->types()->detach();

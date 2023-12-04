@@ -7,7 +7,8 @@
             <thead>
                 <tr>
                     <th scope="col">Titolo</th>
-                    <th scope="col">Tech</th>
+                    <th scope="col">Tecnologia</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">Azioni</th>
                 </tr>
             </thead>

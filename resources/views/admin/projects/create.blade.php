@@ -56,19 +56,19 @@
                         <input
                         type="checkbox"
                         class="btn-check"
-                        id="tag_{{ $type->id }}"
+                        id="type_{{ $type->id }}"
                         autocomplete="off"
                         name="types[]"
                         value="{{ $type->id }}"
 
                             @if ($errors->any() && in_array($type_id, old('types',[])))
                                 checked
-                            @elseif (!$errors->any() && $project->types->contains($type))
+                            @elseif ($project && $project->types && $project->types->contains($type))
                                 checked
                             @endif
 
                         >
-                        <label class="btn btn-outline-primary" for="btncheck1">{{ $type->name }}</label>
+                        <label class="btn btn-outline-primary" for="type_{{ $type->id}}">{{ $type->name }}</label>
                     @endforeach
 
                 </div>
